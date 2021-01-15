@@ -111,20 +111,17 @@ class ViewController: UIViewController {
         imgHeightConstraint?.isActive = true
         hStackView.isHidden = true
 
-
-  
-//        view.addSubview(tableView)
-//        tableView.dataSource = self
+        view.addSubview(tableView)
+        tableView.dataSource = self
 //        // set delegates
-//        tableView.delegate = self
+        tableView.delegate = self
 //        // set row height
 //        tableView.rowHeight = 44
 //        // register cells
 //        // set constraints
 //        tableView.matchParent()
-
+        tableView.anchors(topAnchor: navBarView.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, bottomAnchor: view.bottomAnchor)
     }
-    
     
     func extendView(_ viewToAnimate: UIView){
         isExtend = true
