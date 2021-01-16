@@ -8,8 +8,11 @@
 import UIKit
 
 class ViewController: UIViewController {
+    var cellId = "snackCell"
     
     var snacks: [String] = ["Oreos", "Pizza Pocket", "Pop Tarts", "Popsicle", "Ramen"]
+    
+    var selectedItems: [String] = []
     
     let navBarView: UIView = {
         let view = UIView()
@@ -32,43 +35,56 @@ class ViewController: UIViewController {
     
     var isExtend: Bool = false
     
-    var oreosImg : UIImageView = {
+    lazy var oreosImg : UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "oreos")
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:))))
+        imageView.tag = 0
         return imageView
     }()
     
-    var pizzaPocketImg : UIImageView = {
+    lazy var pizzaPocketImg : UIImageView = {
        let imageView = UIImageView()
         imageView.image = UIImage(named: "pizza_pockets")
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:))))
+        imageView.tag = 1
         return imageView
     }()
     
-    var popTartsImg : UIImageView = {
+    lazy var popTartsImg : UIImageView = {
        let imageView = UIImageView()
         imageView.image = UIImage(named: "pop_tarts")
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:))))
+        imageView.tag = 2
         return imageView
     }()
     
     
-    var popsicleImg : UIImageView = {
+    lazy var popsicleImg : UIImageView = {
        let imageView = UIImageView()
         imageView.image = UIImage(named: "popsicle")
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:))))
+        imageView.tag = 3
         return imageView
     }()
     
-    var ramenImg : UIImageView = {
+    lazy var ramenImg : UIImageView = {
        let imageView = UIImageView()
         imageView.image = UIImage(named: "ramen")
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:))))
+        imageView.tag = 4
         return imageView
     }()
-    
-    let snackCell = DisplaySnackTableViewCell()
     
     var hStackView = UIStackView()
     
@@ -78,7 +94,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(navBarView)
-
 
         navBarView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
         navBarView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
@@ -102,8 +117,7 @@ class ViewController: UIViewController {
         hStackView.spacing = 0
         hStackView.translatesAutoresizingMaskIntoConstraints = false
         navBarView.addSubview(hStackView)
-
-
+        
         hStackView.leadingAnchor.constraint(equalTo: navBarView.leadingAnchor, constant: 8).isActive = true
         hStackView.trailingAnchor.constraint(equalTo: plusIcon.trailingAnchor, constant: -30).isActive = true
         hStackView.topAnchor.constraint(equalTo: navBarView.topAnchor, constant: 20).isActive = true
@@ -111,17 +125,40 @@ class ViewController: UIViewController {
         imgHeightConstraint?.isActive = true
         hStackView.isHidden = true
 
+
         view.addSubview(tableView)
         tableView.dataSource = self
-//        // set delegates
         tableView.delegate = self
-//        // set row height
-//        tableView.rowHeight = 44
-//        // register cells
-//        // set constraints
-//        tableView.matchParent()
         tableView.anchors(topAnchor: navBarView.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, bottomAnchor: view.bottomAnchor)
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
     }
+    
+    
+    @objc func imageTapped(_ sender : UITapGestureRecognizer) {
+        if let tag = sender.view?.tag {
+            switch tag {
+            case 0:
+                selectedItems.insert(snacks[0], at: 0)
+                tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+            case 1:
+                selectedItems.insert(snacks[1], at: 0)
+                tableView.insertRows(at:  [IndexPath(row: 0, section: 0)], with: .automatic)
+            case 2:
+                selectedItems.insert(snacks[2], at: 0)
+                tableView.insertRows(at:  [IndexPath(row: 0, section: 0)], with: .automatic)
+            case 3:
+                selectedItems.insert(snacks[3], at: 0)
+                tableView.insertRows(at:  [IndexPath(row: 0, section: 0)], with: .automatic)
+            case 4:
+                selectedItems.insert(snacks[4], at: 0)
+                tableView.insertRows(at:  [IndexPath(row: 0, section: 0)], with: .automatic)
+            default:
+                fatalError()
+            }
+        }
+    }
+  
     
     func extendView(_ viewToAnimate: UIView){
         isExtend = true
@@ -163,13 +200,14 @@ class ViewController: UIViewController {
 
 extension ViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return selectedItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        cell.textLabel?.text = selectedItems[indexPath.row]
+      return cell
     }
-    
 }
 
 extension ViewController: UITableViewDelegate {
