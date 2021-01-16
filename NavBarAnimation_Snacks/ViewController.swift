@@ -8,11 +8,19 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    // TableView Relation
     var cellId = "snackCell"
-    
     var snacks: [String] = ["Oreos", "Pizza Pocket", "Pop Tarts", "Popsicle", "Ramen"]
-    
     var selectedItems: [String] = []
+
+    // Image Preparation
+    let oreosImg = UIImageView(image: UIImage(named: "oreos"))
+    let pizzaPocketImg = UIImageView(image: UIImage(named: "pizza_pockets"))
+    let popTartsImg = UIImageView(image: UIImage(named: "pop_tarts"))
+    let popsicleImg = UIImageView(image: UIImage(named: "popsicle"))
+    let ramenImg = UIImageView(image: UIImage(named: "ramen"))
+    lazy var SnackImages: [UIImageView] = [oreosImg, pizzaPocketImg,popTartsImg,popsicleImg,ramenImg]
     
     let navBarView: UIView = {
         let view = UIView()
@@ -30,107 +38,81 @@ class ViewController: UIViewController {
         return btn
     }()
     
+    let navBarTitle: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "SNACKS"
+        label.font = UIFont.systemFont(ofSize: 25)
+        label.tintColor = .black
+        label.textAlignment = .center
+        return label
+    }()
+    
     var heightConstraint: NSLayoutConstraint?
     var imgHeightConstraint: NSLayoutConstraint?
     
     var isExtend: Bool = false
-    
-    lazy var oreosImg : UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "oreos")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:))))
-        imageView.tag = 0
-        return imageView
-    }()
-    
-    lazy var pizzaPocketImg : UIImageView = {
-       let imageView = UIImageView()
-        imageView.image = UIImage(named: "pizza_pockets")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:))))
-        imageView.tag = 1
-        return imageView
-    }()
-    
-    lazy var popTartsImg : UIImageView = {
-       let imageView = UIImageView()
-        imageView.image = UIImage(named: "pop_tarts")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:))))
-        imageView.tag = 2
-        return imageView
-    }()
-    
-    
-    lazy var popsicleImg : UIImageView = {
-       let imageView = UIImageView()
-        imageView.image = UIImage(named: "popsicle")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:))))
-        imageView.tag = 3
-        return imageView
-    }()
-    
-    lazy var ramenImg : UIImageView = {
-       let imageView = UIImageView()
-        imageView.image = UIImage(named: "ramen")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:))))
-        imageView.tag = 4
-        return imageView
-    }()
-    
+
     var hStackView = UIStackView()
+    var imageStackView = UIStackView()
     
     var tableView = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
+        // NavBar Setting
         view.addSubview(navBarView)
-
         navBarView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
         navBarView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
         navBarView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
-
-        heightConstraint = navBarView.heightAnchor.constraint(equalToConstant: 44)
-        heightConstraint?.isActive = true
-
+        heightConstraint = navBarView.heightAnchor.constraint(equalToConstant: 88)
+                heightConstraint?.isActive = true
+        
+        // plusIcon Setting
         view.addSubview(plusIcon)
         plusIcon.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -12).isActive = true
         plusIcon.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
-
-        plusIcon.addTarget(self, action:#selector(plusIconTapped), for: .touchUpInside)
-
-        isExtend = false
-
-        hStackView = UIStackView(arrangedSubviews: [oreosImg, pizzaPocketImg,popTartsImg,popsicleImg,ramenImg])
-        hStackView.axis = .horizontal
-        hStackView.alignment = .fill
-        hStackView.distribution = .fillEqually
-        hStackView.spacing = 0
-        hStackView.translatesAutoresizingMaskIntoConstraints = false
-        navBarView.addSubview(hStackView)
         
-        hStackView.leadingAnchor.constraint(equalTo: navBarView.leadingAnchor, constant: 8).isActive = true
-        hStackView.trailingAnchor.constraint(equalTo: plusIcon.trailingAnchor, constant: -30).isActive = true
-        hStackView.topAnchor.constraint(equalTo: navBarView.topAnchor, constant: 20).isActive = true
-        imgHeightConstraint = hStackView.heightAnchor.constraint(equalToConstant: 110)
-        imgHeightConstraint?.isActive = true
-        hStackView.isHidden = true
+        plusIcon.addTarget(self, action:#selector(plusIconTapped), for: .touchUpInside)
+        
+        // create a stack view
+        imageStackView = UIStackView(frame: CGRect(x: 0, y: 88, width: view.frame.width, height: 100))
+        imageStackView.axis = .horizontal
+        imageStackView.distribution = .fillEqually
 
-
+        // add 5 imageViews to the stackView
+        for i in 0..<SnackImages.count {
+            SnackImages[i].isUserInteractionEnabled = true
+            SnackImages[i].translatesAutoresizingMaskIntoConstraints = false
+            // Tap Recognizer for each image
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
+            SnackImages[i].addGestureRecognizer(tapGestureRecognizer)
+            SnackImages[i].tag = i
+            imageStackView.addArrangedSubview(SnackImages[i])
+        }
+        navBarView.addSubview(imageStackView)
+        navBarView.addSubview(navBarTitle)
+        navBarTitle.leadingAnchor.constraint(equalTo: navBarView.leadingAnchor).isActive = true
+        navBarTitle.trailingAnchor.constraint(equalTo: navBarView.trailingAnchor).isActive = true
+        navBarTitle.centerXAnchor.constraint(equalTo: navBarView.centerXAnchor).isActive = true
+        navBarTitle.topAnchor.constraint(equalTo: navBarView.topAnchor, constant: 10).isActive = true
+        
+        imageStackView.isHidden = true
+        imageStackView.translatesAutoresizingMaskIntoConstraints = false
+        // set constraints for StackView
+        imageStackView.topAnchor.constraint(equalTo: navBarTitle.bottomAnchor, constant: 10).isActive = true
+        imageStackView.leadingAnchor.constraint(equalTo: navBarView.leadingAnchor).isActive = true
+        imageStackView.widthAnchor.constraint(equalTo: navBarView.widthAnchor).isActive = true
+        imageStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        isExtend = false
+        // table view
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.anchors(topAnchor: navBarView.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, bottomAnchor: view.bottomAnchor)
-        
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
     }
     
@@ -167,21 +149,28 @@ class ViewController: UIViewController {
             self.view.layoutIfNeeded()
             let rotateTransform = CGAffineTransform(rotationAngle: .pi/4)
             self.plusIcon.transform = rotateTransform
+            // title label
+            let translateform = CGAffineTransform(translationX: 1.0, y: self.navBarView.frame.size.height / 4)
+            self.navBarTitle.transform = translateform
+            self.navBarTitle.text = "Add a SNACK"
         }, completion: nil)
         
         UIView.animate(withDuration: 2.0, delay: 0.0, usingSpringWithDamping: 0.1, initialSpringVelocity: 1.0, options: .transitionFlipFromTop, animations: {
-            self.hStackView.isHidden = false
-            let translateTransform = CGAffineTransform(translationX: 0, y: self.hStackView.frame.size.height / 2)
-            self.hStackView.transform = translateTransform
+            self.imageStackView.isHidden = false
+            let translateTransform = CGAffineTransform(translationX: 0, y: self.imageStackView.frame.size.height / 2)
+            self.imageStackView.transform = translateTransform
         }, completion: nil)
     }
     
     func closeView(_ viewToAnimate: UIView) {
         isExtend = false
-        hStackView.isHidden = true
+        imageStackView.isHidden = true
         heightConstraint?.constant = 88
         UIView.animate(withDuration: 2.0, delay: 0.0, usingSpringWithDamping: 0.1, initialSpringVelocity: 1.0, options: .beginFromCurrentState, animations: {
             self.view.layoutIfNeeded()
+            // title label
+            self.navBarTitle.transform = .identity
+            self.navBarTitle.text = "SNACKS"
         }, completion: nil)
             
         UIView.animate(withDuration: 2.0, delay: 0.0, usingSpringWithDamping: 0.1, initialSpringVelocity: 1.0, options: .beginFromCurrentState, animations: {
