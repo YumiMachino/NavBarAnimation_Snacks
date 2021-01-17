@@ -7,15 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE35F10D25B4B3D900AFB1A6 /* UIView + Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE35F10C25B4B3D900AFB1A6 /* UIView + Constraints.swift */; };
 		AE86086A25B019EF0058E3E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE86086925B019EF0058E3E9 /* AppDelegate.swift */; };
 		AE86086C25B019EF0058E3E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE86086B25B019EF0058E3E9 /* SceneDelegate.swift */; };
 		AE86086E25B019EF0058E3E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE86086D25B019EF0058E3E9 /* ViewController.swift */; };
 		AE86087325B019F40058E3E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE86087225B019F40058E3E9 /* Assets.xcassets */; };
 		AE86087625B019F40058E3E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE86087425B019F40058E3E9 /* LaunchScreen.storyboard */; };
-		AEA6932A25B22BA00038771A /* UIView+ConstraintLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA6932925B22BA00038771A /* UIView+ConstraintLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AE35F10C25B4B3D900AFB1A6 /* UIView + Constraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView + Constraints.swift"; sourceTree = "<group>"; };
 		AE86086625B019EF0058E3E9 /* NavBarAnimation_Snacks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavBarAnimation_Snacks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE86086925B019EF0058E3E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AE86086B25B019EF0058E3E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -23,7 +24,6 @@
 		AE86087225B019F40058E3E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AE86087525B019F40058E3E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AE86087725B019F40058E3E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AEA6932925B22BA00038771A /* UIView+ConstraintLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+ConstraintLayout.swift"; path = "../../SimpleTodoApp/SimpleTodoApp/Utils/UIView+ConstraintLayout.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +56,7 @@
 		AE86086825B019EF0058E3E9 /* NavBarAnimation_Snacks */ = {
 			isa = PBXGroup;
 			children = (
-				AEA6932925B22BA00038771A /* UIView+ConstraintLayout.swift */,
+				AE35F10C25B4B3D900AFB1A6 /* UIView + Constraints.swift */,
 				AE86086925B019EF0058E3E9 /* AppDelegate.swift */,
 				AE86086B25B019EF0058E3E9 /* SceneDelegate.swift */,
 				AE86086D25B019EF0058E3E9 /* ViewController.swift */,
@@ -137,9 +137,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE86086E25B019EF0058E3E9 /* ViewController.swift in Sources */,
+				AE35F10D25B4B3D900AFB1A6 /* UIView + Constraints.swift in Sources */,
 				AE86086A25B019EF0058E3E9 /* AppDelegate.swift in Sources */,
 				AE86086C25B019EF0058E3E9 /* SceneDelegate.swift in Sources */,
-				AEA6932A25B22BA00038771A /* UIView+ConstraintLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
